@@ -1,18 +1,89 @@
 @startuml Test Use Case Diagram
 
 scale 2
+
+'change direction of rectangles and arrows, default style is top to bottom direction
 left to right direction
-skinparam packageStyle rect
-actor customer
-actor clerk
-actor anotherCustomer
-anotherCustomer --|> customer
-rectangle Checkout {
-    customer -- checkout
-    (checkout) .> (payment): include
-    (help) .> (checkout): extend
-    (checkout) -- clerk
-    (decline) -- clerk
-    anotherCustomer -- (payment)
+
+' define style of packages (delete ' in a row below)
+'skinparam packageStyle rect
+
+' change skin parameter of actors (delete ' in a row below)
+'skinparam actorStyle awesome
+'skinparam actorStyle Hollow 
+'skinparam Handwritten true
+skinparam usecase {
+BackgroundColor DarkSeaGreen
+BorderColor DarkSlateGray
+
+BackgroundColor<< Main >> YellowGreen
+BorderColor<< Main >> YellowGreen
+
+ArrowColor Olive
+ActorBorderColor black
+ActorFontName Courier
+
+ActorBackgroundColor<< Human >> Gold
 }
-@endumlgit 
+
+' define actors
+actor Customer
+' business actor with /
+actor/ Clerk #pink;line:red;line.bold;text:red
+:Another\nCustomer: as AC <<stereotype>>
+' The more dashes - in the arrow, the longer the arrow
+AC --|> Customer
+
+'define use cases
+usecase UC1 #palegreen;line:green;line.dashed;text:green as "You can use
+several lines to define your usecase.
+You can also use separators.
+--
+Several separators are possible.
+==
+And you can add titles:
+..Conclusion..
+This allows large description." 
+
+'define packages
+package Professional {
+  actor Chef as c
+  actor "Food Critic" as fc
+}
+
+'define rectangles
+rectangle "Checkout Use Case" {
+    ' define usecase with alias (optional), use cases should be defined in the 
+    ' rectangle to be drawn in it
+    'business use case with /
+    usecase/ (Delayed\npayment) as (DP)
+    usecase Checkout <<main>>
+    Customer --- Checkout
+    (Checkout) .> (DP): include
+    (help) .> (Checkout): extend
+    (Checkout) -- Clerk
+    (decline) -- Clerk
+    AC -- (payment)
+}
+
+'create several pages (delete ' in a row below)
+'newpage
+
+' using notes
+note right of Professional: This is an example.
+note top of Customer: Note on the top.
+note right of UC1
+  A note can also
+  be on several lines
+end note
+note "This note is connected\nto several objects." as N2
+(help) .. N2
+N2 .. (more help)
+
+' change direction of arrows
+:user: -left-> (dummyLeft) : normal
+:user: -right-> (dummyRight) #line:red;line.bold;text:red  : red bold
+:user: -up-> (dummyUp) #green;line.dashed;text:green : green dashed
+:user: -down-> (dummyDown) #blue;line.dotted;text:blue   : blue dotted
+
+@enduml
