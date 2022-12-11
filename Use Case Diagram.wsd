@@ -15,4 +15,4 @@ rectangle Checkout {
     (decline) -- clerk
     anotherCustomer -- (payment)
 }
-@enduml
+@endumlgit 
